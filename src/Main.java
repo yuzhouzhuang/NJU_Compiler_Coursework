@@ -1,21 +1,8 @@
-/*
- * 主程序
- */
-import lexer.Lexer;
-
-import java.io.*;
+import Analyzer.Analyzer;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Lexer lexer = new Lexer();
-
-        while (lexer.getReaderState() == false) {
-            lexer.scan();
-        }
-
-		/* 保存相关信息 */
-        lexer.saveTokens();
-        lexer.saveSymbolsTable();
-
+    public static void main(String[] args) {
+        Analyzer analyzer = new Analyzer();
+        analyzer.startAnalyze();
     }
 }
