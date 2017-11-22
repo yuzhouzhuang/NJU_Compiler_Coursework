@@ -1,18 +1,1 @@
-import java.io.*;
-
-/**
- * Created by Zhuangyz1998 on 2017/10/25.
- */
-public class Input {
-    private static final String FILE = "input.txt";
-    // get input file
-    protected Input() {
-        File file = new File(FILE);
-        try {
-            reader = new InputStreamReader(new FileInputStream(file));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
+102 + 23 * (arrayListSize + 1)

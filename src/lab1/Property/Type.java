@@ -1,4 +1,4 @@
-package Property;
+package lab1.Property;
 
 public class Type {
     private static String[] keywords = new String[]{

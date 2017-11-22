@@ -1,8 +1,8 @@
-package Analyzer;
+package lab1.Analyzer;
 
-import Property.State;
-import Property.Type;
-import util.IOHelper;
+import lab1.Property.State;
+import lab1.Property.Type;
+import lab1.util.IOHelper;
 
 public class Analyzer {
     private IOHelper ioHelper;
@@ -12,6 +12,7 @@ public class Analyzer {
     private StringBuffer annotationTemp;
     private StringBuffer quotationTemp;
     private char operatorTemp;
+    private StringBuffer output;
 
     public Analyzer() {
         this.ioHelper = new IOHelper();
@@ -20,6 +21,7 @@ public class Analyzer {
         this.numberTemp = new StringBuffer();
         this.annotationTemp = new StringBuffer();
         this.quotationTemp = new StringBuffer();
+        this.output = new StringBuffer();
     }
 
 
@@ -62,13 +64,19 @@ public class Analyzer {
                 case '}':
                 case ',':
                 case '.':
-                case '(':
-                case ')':
                 case '[':
                 case ']':
                 case '?':
                 case '~':
                 case '^':
+                    ioHelper.addIntoOutputBuffer("Operator           " + c);
+                    break;
+                case '(':
+                    this.output.append("(");
+                    ioHelper.addIntoOutputBuffer("Operator           " + c);
+                    break;
+                case ')':
+                    this.output.append(")");
                     ioHelper.addIntoOutputBuffer("Operator           " + c);
                     break;
                 default:
@@ -80,7 +88,7 @@ public class Analyzer {
         }
     }
 
-    public void startAnalyze() {
+    public String startAnalyze() {
         while (true) {
             char c = ioHelper.getChar();
             if (c == IOHelper.EOF) {
@@ -96,6 +104,7 @@ public class Analyzer {
                         state = state.DONE;
                     } else {
                         ioHelper.addIntoOutputBuffer("Unary Operator     " + operatorTemp);
+                        this.output.append(operatorTemp);
                         state = state.DONE;
                         handleCharacter(c);
                     }
@@ -110,6 +119,7 @@ public class Analyzer {
                             ioHelper.addIntoOutputBuffer("Identifier         " + identifierTemp.toString());
                         }
                         state = state.DONE;
+                        this.output.append("i");
                         identifierTemp = new StringBuffer();
                         handleCharacter(c);
                     }
@@ -207,6 +217,7 @@ public class Analyzer {
                     } else {
                         state = state.DONE;
                         ioHelper.addIntoOutputBuffer("Integer            " + numberTemp);
+                        this.output.append("n");
                         numberTemp = new StringBuffer();
                         handleCharacter(c);
                     }
@@ -229,10 +240,11 @@ public class Analyzer {
         }
 
         System.out.println("Start analyze:");
-        System.out.println("-----------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------");
         ioHelper.startOutput();
-        System.out.println("-----------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("End analyze");
+        return this.output.toString();
     }
 
 }
